@@ -1,0 +1,13 @@
+﻿<tr>
+    <td><strong>@J</strong></td>
+    @for (int i = 1; i <= Max; i++)
+    {
+        <td>@(i*J)</td>
+    }
+</tr>
+@code {
+    [Parameter]
+    public int J { get; set; }
+    [Parameter]
+    public int Max { get; set; }
+}

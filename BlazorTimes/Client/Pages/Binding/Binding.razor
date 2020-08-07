@@ -1,0 +1,70 @@
+﻿@page "/binding"
+<h3>Binding</h3>
+<h4>One Way</h4>
+<div class="row">
+    <div class="col-md-6 border">
+        <p><strong>Expressions</strong></p>
+        <p>Message: @Message</p>
+
+    </div>
+    <div class="col-md-6 border">
+        <p><strong>Events</strong></p>
+        <div>
+            <button @onclick="() => HideOne = !HideOne">Hide using Lambda</button>
+            <label hidden=@HideOne> Now you see me!</label>
+        </div>
+        <div>
+            <button @onclick="UseHideTwo">Hide using Method</button>
+            <label hidden=@HideTwo>Now you see me!</label>
+        </div>
+    </div>
+</div>
+<h4>Bind with 'bind'</h4>
+<div class="row">
+    <div class="col-md-6 border">
+        <p><strong>bind 'onchange' (change seen on move focus)</strong></p>
+        <p>Entry: @EntryOne</p>
+        <input @bind="EntryOne" />
+    </div>
+    <div class="col-md-6 border">
+        <p><strong>bind 'oninput' (change seen on text change)</strong></p>
+        <p>Entry: @EntryTwo</p>
+        <input @bind="EntryTwo" @bind:event="oninput" />
+    </div>
+</div>
+<h4>Bind with 'bind-value'</h4>
+<div class="row">
+    <div class="col-md-6 border">
+        <p><strong>bind 'by value' and 'explicit event'</strong></p>
+        <p>Entry (onchange): @EntryThree</p>
+        <input @bind-value="EntryThree" @bind-value:event="onchange" @oninput="SetValueFour" />
+        <p>Entry (oninput): @EntryFour</p>
+    </div>
+    <div class="col-md-6 border">
+        <p><strong>bind 'by value' and 'explicit event'</strong></p>
+        <p>Entry (oninput): @EntryFive</p>
+        <input @bind-value="EntryFive" @bind-value:event="oninput" @onchange="SetValueSix" />
+        <p>Entry (onchange): @EntrySix</p>
+    </div>
+</div>
+@code {
+    public string Message { get; set; } = "We have already seen expressions!";
+    public bool HideOne { get; set; } = false;
+    public bool HideTwo { get; set; } = false;
+    public void UseHideTwo() => HideTwo = !HideTwo;
+
+    public string EntryOne { get; set; }
+    public string EntryTwo { get; set; }
+    public string EntryThree { get; set; }
+    public string EntryFour { get; set; }
+    public string EntryFive { get; set; }
+    public string EntrySix { get; set; }
+    public void SetValueFour(ChangeEventArgs e)
+    {
+        EntryFour = (string)e.Value;
+    }
+    public void SetValueSix(ChangeEventArgs e)
+    {
+        EntrySix = (string)e.Value;
+    }
+}

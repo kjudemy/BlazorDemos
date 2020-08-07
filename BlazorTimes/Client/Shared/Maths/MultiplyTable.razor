@@ -1,0 +1,24 @@
+﻿<h3>MultiplyTable</h3>
+
+<table class="border">
+    <thead>
+        <tr>
+            <th>x</th>
+            @for (int i = 1; i <= MaxValue; i++)
+            {
+                <th>@i</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for (int j = 1; j <= MaxValue; j++)
+        {
+            <MultiplyRow J="@j" Max="@MaxValue"></MultiplyRow>
+        }
+    </tbody>
+</table>
+@code {
+    [Parameter]
+    public int MaxValue { get; set; }
+
+}

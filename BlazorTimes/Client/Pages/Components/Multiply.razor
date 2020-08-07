@@ -1,0 +1,24 @@
+﻿@page "/components/multiply"
+<h3>Multiply</h3>
+
+<table class="table-bordered">
+    <thead>
+        <tr>
+            <th>x</th>
+            @for (int i = 1; i <= Size; i++)
+            {
+                <th>@i</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for (int j = 1; j <= Size; j++)
+        {
+            <MultiplyRow J="@j" Max="@Size" ></MultiplyRow>
+        }
+    </tbody>
+</table>
+
+@code {
+    public int Size { get; set; } = 10;
+}

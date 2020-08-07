@@ -1,0 +1,44 @@
+﻿@page "/times/local/display"
+@using BlazorTimes.Client.Shared.Times
+@inject NavigationManager navigationManager
+@inject IJSRuntime js
+@using System.Linq
+<h3>Times Display</h3>
+@if (Times == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <button @onclick=AddTime>Add Time</button>
+    <div>
+        <GenericTableTemplate Data="@Times">
+            <TheHeader>@Header</TheHeader>
+            <TheRow>@Row(@context)</TheRow>
+        </GenericTableTemplate>
+    </div>
+}
+@code {
+    public List<RunTime> Times { get; set; }
+    public RenderFragment Header { get; set; } =@<tr><th>Name</th><th>Date</th><th>Time</th><th></th><th></th><th></th></tr>;
+public RenderFragment<RunTime> Row { get; set; } = (RunTime item) => @<tr>
+    <td>@item.Name</td>
+    <td>@item.Date.ToString("dd/MM/yy")</td>
+    <td>@item.Time.ToString("HH:mm")</td>
+    <td><a href="/times/local/@item.Id/edit">Edit</a></td>
+    <td><a href="/times/local/@item.Id/edit/validated">Edit Validated</a></td>
+    <td><a href="/times/local/@item.Id/delete">Delete</a></td>
+</tr>;
+
+protected async override Task OnInitializedAsync()
+{
+var temp = (await BlazorTimes.Client.Helpers.DataStoreArray<RunTime>.RetrieveItemArrayAsync(js, nameof(RunTime)));
+Times = temp == null ? new List<RunTime>() : temp.ToList();
+await base.OnInitializedAsync();
+return;
+}
+public void AddTime()
+{
+navigationManager.NavigateTo("/times/local/add/validated");
+}
+}

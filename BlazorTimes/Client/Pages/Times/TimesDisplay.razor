@@ -1,0 +1,38 @@
+﻿@page "/times/display"
+<h3>Display Times</h3>
+
+@if (Times == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table class="table-bordered">
+        <thead>
+            <tr><th>Name</th><th>Date</th><th>Time</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Times)
+            {
+                <tr><td>@item.Name</td><td>@item.Date.ToString("dd/MM/yy")</td><td>@item.Time.ToString("HH:mm")</td></tr>
+            }
+        </tbody>
+    </table>
+}
+@code {
+    public List<RunTime> Times { get; set; }
+    protected override void OnInitialized()
+    {
+        Times = new List<RunTime>();
+        Times.Add(new RunTime() { Id = 1, Name = "Rose", Date = DateTime.Now - TimeSpan.FromDays(20), Time = new DateTime(1, 1, 1, 0, 37, 20) });
+        Times.Add(new RunTime() { Id = 2, Name = "Rose", Date = DateTime.Now - TimeSpan.FromDays(2), Time = new DateTime(1, 1, 1, 0, 36, 30) });
+        Times.Add(new RunTime() { Id = 3, Name = "Rose", Date = DateTime.Now - TimeSpan.FromDays(1), Time = new DateTime(1, 1, 1, 0, 34, 23) });
+        Times.Add(new RunTime() { Id = 4, Name = "Rose", Date = DateTime.Now - TimeSpan.FromDays(0), Time = new DateTime(1, 1, 1, 0, 33, 12) });
+        Times.Add(new RunTime() { Id = 5, Name = "Lily", Date = DateTime.Now - TimeSpan.FromDays(20), Time = new DateTime(1, 1, 1, 0, 35, 43) });
+        Times.Add(new RunTime() { Id = 6, Name = "Lily", Date = DateTime.Now - TimeSpan.FromDays(2), Time = new DateTime(1, 1, 1, 0, 33, 54) });
+        Times.Add(new RunTime() { Id = 7, Name = "Lily", Date = DateTime.Now - TimeSpan.FromDays(1), Time = new DateTime(1, 1, 1, 0, 36, 17) });
+        Times.Add(new RunTime() { Id = 8, Name = "Lily", Date = DateTime.Now - TimeSpan.FromDays(0), Time = new DateTime(1, 1, 1, 0, 33, 23) });
+
+        base.OnInitialized();
+    }
+}

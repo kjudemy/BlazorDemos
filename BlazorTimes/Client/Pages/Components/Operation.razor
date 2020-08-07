@@ -1,0 +1,24 @@
+﻿@page "/components/operation"
+<h3>Multiply</h3>
+
+<table class="border">
+    <thead>
+        <tr>
+            <th>x</th>
+            @for (int i = 1; i <= 10; i++)
+            {
+                <th>@i</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for (int j = 1; j <= 10; j++)
+        {
+            <OperationRow Operation=@Op J="@j" Max=10></OperationRow>
+        }
+    </tbody>
+</table>
+
+@code {
+    public Func<int, int, int> Op { get; set; } = (a, b) => a * b;
+}

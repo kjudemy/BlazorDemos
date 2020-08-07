@@ -1,0 +1,91 @@
+﻿@page "/times/service/add/validated"
+@using BlazorTimes.Client.Helpers
+@using BlazorTimes.Client.Shared.Times
+@inject NavigationManager navigationManager
+@inject HttpClient http
+
+<h3>Add Time Validated</h3>
+@if (InvalidEntry)
+{
+    <h4>Invalid - Correct errors and try again!!</h4>
+}
+@if (Time == null)
+{
+    <h4>No Time!</h4>
+}
+else
+{
+    if (Names != null)
+    {
+    <h3>Name must be one of: @string.Join(", ", Names)</h3>
+    }
+    <EditForm Model=@Time
+              OnValidSubmit="ValidSubmit" OnInvalidSubmit="InvalidSubmit">
+
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-group">
+            <label>Name:</label>
+            <InputText @bind-Value="Time.Name" placeholder="Enter name!" />
+            <ValidationMessage For="() => Time.Name" />
+        </div>
+        <div class="form-group">
+            <label>Date:</label>
+            <InputDate @bind-Value="Time.Date" ParsingErrorMessage="Must be a Date!" AdditionalAttributes="DateAttributes" />
+        </div>
+        <div class="form-group">
+            <label>Time:</label>
+            <InputTime @bind-Value="Time.Time" ParsingErrorMessage="Must be a Time!"  />
+        </div>
+        <button type="submit">Save</button>
+    </EditForm>
+    <button @onclick="Cancel">Cancel</button>
+}
+@code {
+    public RunTime Time { get; set; } = new RunTime();
+    public bool InvalidEntry { get; set; } = false;
+    public Dictionary<string, object> DateAttributes { get; set; } =
+        new Dictionary<string, object> { ["type"] = "date" };
+    [Parameter]
+    public int Id { get; set; }
+    public RunTime[] Times { get; set; }
+    public string[] Names { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        Names = await http.GetFromJsonAsync<string[]>("api/runtimes/names");
+
+        await base.OnInitializedAsync();
+        return;
+    }
+    public async Task ValidSubmit()
+    {
+
+        if (Time != null)
+        {
+            var jsonTime = System.Text.Json.JsonSerializer.Serialize(Time);
+            StringContent content = new StringContent(jsonTime, encoding: System.Text.Encoding.UTF8, "application/json");
+            try
+            {
+                var response = (await http.PostAsync($"api/runtimes", content)).EnsureSuccessStatusCode();
+
+                {
+                    navigationManager.NavigateTo("/times/service/display");
+                }
+            }
+            catch (Exception)
+            {
+                InvalidEntry = true;
+            }
+        }
+    }
+    public void InvalidSubmit()
+    {
+        InvalidEntry = true;
+    }
+    public void Cancel()
+    {
+        navigationManager.NavigateTo("/times/service/display");
+    }
+}
+

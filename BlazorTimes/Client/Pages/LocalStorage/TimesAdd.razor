@@ -1,0 +1,52 @@
+﻿@page "/times/local/add"
+@using BlazorTimes.Client.Helpers
+@inject NavigationManager navigationManager
+@inject IJSRuntime js
+
+<h3>Add Time</h3>
+@if (Time == null)
+{
+    <h4>No Time!</h4>
+}
+else
+{
+    <div>
+        <div class="form-group">
+            <label>
+                Name:
+            </label>
+            <input @bind="Time.Name" placeholder="Enter name!" />
+        </div>
+        <div class="form-group">
+            <label>
+                Date:
+            </label>
+            <input @bind="Time.Date" type="date" />
+        </div>
+        <div class="form-group">
+            <label>
+                Time:
+            </label>
+            <input @bind="Time.Time" type="time" />
+        </div>
+        <button @onclick="Save">Save</button>
+        <button @onclick="Cancel">Cancel</button>
+    </div>
+}
+@code {
+    public RunTime Time { get; set; } = new RunTime();
+    public async Task Save()
+    {
+        var temp = await DataStoreArray<RunTime>.RetrieveItemArrayAsync(js, nameof(RunTime));
+        var times = temp == null ? new List<RunTime>() : temp.ToList();
+        int max = times.Count == 0 ? 0 : times.Max(x => x.Id);
+        Time.Id = max + 1;
+        times.Add(Time);
+        await DataStoreArray<RunTime>.StoreItemArrayAsync(js, nameof(RunTime), times.ToArray<RunTime>());
+        navigationManager.NavigateTo("/times/display/local");
+    }
+    public void Cancel()
+    {
+        navigationManager.NavigateTo("/times/display/local");
+    }
+}

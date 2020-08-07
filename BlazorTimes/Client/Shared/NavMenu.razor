@@ -1,0 +1,192 @@
+﻿<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="">BlazorTimes</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <ul class="nav flex-column">
+        <li>
+            <div class="nav-item px-3 text-light" @onclick="ToggleOriginal"><span class="oi oi-list" aria-hidden="true"></span>Original ></div>
+        </li>
+        @if (!CollapseOriginal)
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Home
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="counter">
+                    <span class="oi oi-plus" aria-hidden="true"></span> Counter
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="fetchdata">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+                </NavLink>
+            </li>
+        }
+        <li>
+            <div class="nav-item px-3 text-light" @onclick="ToggleRazor"><span class="oi oi-list" aria-hidden="true"></span>Razor ></div>
+        </li>
+        @if (!CollapseRazor)
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="razorsyntax">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Razor Syntax
+                </NavLink>
+            </li>
+        }
+        <li>
+            <div class="nav-item px-3 text-light" @onclick="ToggleBinding"><span class="oi oi-list" aria-hidden="true"></span>Binding ></div>
+        </li>
+        @if (!CollapseBinding)
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="binding" Match="NavLinkMatch.All">
+                    <span class="oi oi-arrow-left" aria-hidden="true"></span><span class="oi oi-arrow-right" aria-hidden="true"></span> Binding
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="binding/oneway" Match="NavLinkMatch.All">
+                    <span class="oi oi-arrow-left" aria-hidden="true"></span><span class="oi oi-arrow-right" aria-hidden="true"></span> Binding Oneway
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="binding/bind" Match="NavLinkMatch.All">
+                    <span class="oi oi-arrow-left" aria-hidden="true"></span><span class="oi oi-arrow-right" aria-hidden="true"></span> Binding Bind
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="binding/bind/value" Match="NavLinkMatch.All">
+                    <span class="oi oi-arrow-left" aria-hidden="true"></span><span class="oi oi-arrow-right" aria-hidden="true"></span> Binding Bind Value
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="binding/class" Match="NavLinkMatch.All">
+                    <span class="oi oi-arrow-left" aria-hidden="true"></span><span class="oi oi-arrow-right" aria-hidden="true"></span> Binding Class
+                </NavLink>
+            </li>
+        }
+        <li>
+            <div class="nav-item px-3 text-light" @onclick="ToggleTimes"><span class="oi oi-list" aria-hidden="true"></span>Times ></div>
+        </li>
+        @if (!CollapseTimes)
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="times/display" Match="NavLinkMatch.All">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Times
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="times/display/async" Match="NavLinkMatch.All">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Times async
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="times/display/chart">
+                    <span class="oi oi-graph" aria-hidden="true"></span> Times Chart
+                </NavLink>
+            </li>
+        }
+        <li>
+            <div class="nav-item px-3 text-light" @onclick="ToggleComponents"><span class="oi oi-list" aria-hidden="true"></span>Components ></div>
+        </li>
+        @if (!CollapseComponents)
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="times/display/component">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Times
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="times/display/generic">
+                    <span class="oi oi-cog" aria-hidden="true"></span> Times Generic
+                </NavLink>
+            </li>
+        }
+        <li>
+            <div class="nav-item px-3 text-light" @onclick="ToggleLocalStorage"><span class="oi oi-list" aria-hidden="true"></span>Local Storage ></div>
+        </li>
+        @if (!CollapseLocalStorage)
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="times/local/display">
+                    <span class="oi oi-box" aria-hidden="true"></span> Times
+                </NavLink>
+            </li>
+        }
+        <li>
+            <div class="nav-item px-3 text-light" @onclick="()=> CollapseService = !CollapseService"><span class="oi oi-list" aria-hidden="true"></span>Service ></div>
+        </li>
+        @if (!CollapseService)
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="times/service/display">
+                    <span class="oi oi-transfer" aria-hidden="true"></span> Times
+                </NavLink>
+            </li>
+        }
+    </ul>
+</div>
+
+@code {
+
+    private bool collapseNavMenu = true;
+    public bool CollapseOriginal { get; set; } = true;
+    public bool CollapseRazor { get; set; } = true;
+    public bool CollapseBinding { get; set; } = true;
+    public bool CollapseComponents { get; set; } = true;
+    public bool CollapseTimes { get; set; } = true;
+    public bool CollapseLocalStorage { get; set; } = true;
+    public bool CollapseService { get; set; } = true;
+    public bool CollapseAll { get; set; } = true;
+
+    private string NavMenuCssClass => collapseNavMenu && CollapseAll ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu && CollapseAll;
+    }
+    private void ToggleOriginal()
+    {
+        CollapseOriginal = !CollapseOriginal;
+        ToggleAll();
+    }
+    private void ToggleBinding()
+    {
+        CollapseBinding = !CollapseBinding;
+        ToggleAll();
+    }
+    private void ToggleComponents()
+    {
+        CollapseComponents = !CollapseComponents;
+        ToggleAll();
+    }
+    private void ToggleLocalStorage()
+    {
+        CollapseLocalStorage = !CollapseLocalStorage;
+        ToggleAll();
+    }
+    private void ToggleRazor()
+    {
+        CollapseRazor = !CollapseRazor;
+        ToggleAll();
+    }
+    private void ToggleTimes()
+    {
+        CollapseTimes = !CollapseTimes;
+        ToggleAll();
+    }
+    private void ToggleService()
+    {
+        CollapseService = !CollapseService;
+        ToggleAll();
+    }
+    private void ToggleAll()
+    {
+        CollapseAll = CollapseBinding && CollapseComponents && CollapseLocalStorage && CollapseOriginal && CollapseRazor && CollapseTimes && CollapseService;
+    }
+}

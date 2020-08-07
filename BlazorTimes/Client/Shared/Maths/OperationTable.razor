@@ -1,0 +1,27 @@
+﻿<h3>Operation Table</h3>
+
+<table class="border">
+    <thead>
+        <tr>
+            <th>@Symbol</th>
+            @for (int i = 1; i <= MaxValue; i++)
+            {
+                <th>@i</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for (int j = 1; j <= MaxValue; j++)
+        {
+            <OperationRow Operation="@Op" J="@j" Max="@MaxValue"></OperationRow>
+        }
+    </tbody>
+</table>
+@code {
+    [Parameter]
+    public char Symbol { get; set; }
+    [Parameter]
+    public int MaxValue { get; set; }
+    [Parameter]
+    public Func<int,int,int> Op { get; set; }
+}

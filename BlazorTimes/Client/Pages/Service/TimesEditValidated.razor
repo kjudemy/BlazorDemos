@@ -1,0 +1,78 @@
+﻿@page "/times/service/{Id:int}/edit/validated"
+@using BlazorTimes.Client.Helpers
+@inject NavigationManager navigationManager
+@inject HttpClient  http
+
+<h3>Add Time</h3>
+@if (InvalidEntry)
+{
+    <h4>Invalid - Correct errors and try again!!</h4>
+}
+@if (Time == null)
+{
+    <h4>No Time!</h4>
+}
+else
+{
+    <EditForm Model=@Time
+              OnValidSubmit="ValidSubmit" OnInvalidSubmit="InvalidSubmit">
+
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-group">
+            <label>Name:</label>
+            <InputText @bind-Value="Time.Name" />
+            <ValidationMessage For="() => Time.Name" />
+        </div>
+        <div class="form-group">
+            <label>Date:</label>
+            <InputDate @bind-Value="Time.Date" ParsingErrorMessage="Must be a Date!" AdditionalAttributes="DateAttributes" />
+        </div>
+        <div class="form-group">
+            <label>Time:</label>
+            <InputTime @bind-Value="Time.Time" ParsingErrorMessage="Must be a Time!" />
+        </div>
+        <button type="submit">Save</button>
+    </EditForm>
+    <button @onclick="Cancel">Cancel</button>
+}
+@code {
+    public RunTime Time { get; set; } = new RunTime();
+    public bool InvalidEntry { get; set; } = false;
+    public RunTime[] Times { get; set; }
+    [Parameter]
+    public int Id { get; set; }
+    public Dictionary<string, object> DateAttributes { get; set; } =
+    new Dictionary<string, object> { ["type"] = "date" };
+    protected async override Task OnInitializedAsync()
+    {
+        Time = await http.GetFromJsonAsync<RunTime>($"api/runtimes/{Id}");
+
+        await base.OnInitializedAsync();
+        return;
+    }
+    public async Task ValidSubmit()
+    {
+        if (Time != null)
+        {
+            var jsonTime = System.Text.Json.JsonSerializer.Serialize(Time);
+            StringContent content = new StringContent(jsonTime, encoding: System.Text.Encoding.UTF8, "application/json");
+            var response = await http.PutAsync($"api/runtimes/{Id}", content);
+            InvalidEntry = false;
+            if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+            {
+                navigationManager.NavigateTo("/times/service/display");
+            }
+        }
+        navigationManager.NavigateTo("/times/service/display");
+    }
+    public void InvalidSubmit()
+    {
+        InvalidEntry = true;
+    }
+    public void Cancel()
+    {
+        navigationManager.NavigateTo("/times/service/display");
+    }
+}
+

@@ -1,0 +1,19 @@
+﻿@typeparam TItem
+<div>
+    <table class="table-bordered">
+        @TheHeader
+        @foreach (var item in Data)
+        {
+            @TheRow(item)
+        }
+    </table>
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment TheHeader { get; set; }
+    [Parameter]
+    public RenderFragment<TItem> TheRow { get; set; }
+    [Parameter]
+    public IEnumerable<TItem> Data { get; set; }
+}

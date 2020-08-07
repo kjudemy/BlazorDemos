@@ -1,0 +1,18 @@
+﻿@page "/binding/bind"
+<h3>Bind with 'bind'</h3>
+<div class="row">
+    <div class="col-md-6 border">
+        <p><strong>bind 'onchange' (change seen on move focus)</strong></p>
+        <p>Entry: @EntryOne</p>
+        <input @bind="EntryOne" />
+    </div>
+    <div class="col-md-6 border">
+        <p><strong>bind 'oninput' (change seen on text change)</strong></p>
+        <p>Entry: @EntryTwo</p>
+        <input @bind="EntryTwo" @bind:event="oninput" />
+    </div>
+</div>
+@code {
+    public string EntryOne { get; set; }
+    public string EntryTwo { get; set; }
+}

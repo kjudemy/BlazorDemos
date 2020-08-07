@@ -1,0 +1,60 @@
+﻿@page "/times/local/{Id:int}/edit"
+@using BlazorTimes.Client.Helpers
+@inject NavigationManager navigationManager
+@inject IJSRuntime js
+
+<h3>Edit Time</h3>
+@if (Time == null)
+{
+    <h4>No Time!</h4>
+}
+else
+{
+    <div>
+        <div class="form-group">
+            <label>
+                Name:
+            </label>
+            <input @bind="Time.Name" />
+        </div>
+        <div class="form-group">
+            <label>
+                Date:
+            </label>
+            <input @bind="Time.Date" type="date" />
+        </div>
+        <div class="form-group">
+            <label>
+                Time:
+            </label>
+            <input @bind="Time.Time" type="time" />
+        </div>
+        <button @onclick="Save">Save</button>
+        <button @onclick="Cancel">Cancel</button>
+    </div>
+}
+@code {
+    public RunTime Time { get; set; } 
+    [Parameter]
+    public int Id { get; set; }
+    public RunTime[] Times { get; set; }
+    protected async override Task OnInitializedAsync()
+    {
+        Times = await DataStoreArray<RunTime>.RetrieveItemArrayAsync(js, nameof(RunTime));
+
+        Time = Times.FirstOrDefault(x=> x.Id == Id);
+        await base.OnInitializedAsync();
+        return;
+    }
+    public async Task Save()
+    {
+        var times = Times == null ? new List<RunTime>() : Times.ToList();
+
+        await DataStoreArray<RunTime>.StoreItemArrayAsync(js, nameof(RunTime), times.ToArray<RunTime>());
+        navigationManager.NavigateTo("/times/local/display");
+    }
+    public void Cancel()
+    {
+        navigationManager.NavigateTo("/times/local/display");
+    }
+}

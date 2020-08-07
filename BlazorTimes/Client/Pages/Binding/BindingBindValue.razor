@@ -1,0 +1,30 @@
+﻿@page "/binding/bind/value"
+<h3>Bind with 'bind-value'</h3>
+<div class="row">
+    <div class="col-md-6 border">
+        <p><strong>bind 'by value' and 'explicit event'</strong></p>
+        <p>Entry (onchange): @EntryThree</p>
+        <input @bind-value="EntryThree" @bind-value:event="onchange" @oninput="SetValueFour" />
+        <p>Entry (oninput): @EntryFour</p>
+    </div>
+    <div class="col-md-6 border">
+        <p><strong>bind 'by value' and 'explicit event'</strong></p>
+        <p>Entry (oninput): @EntryFive</p>
+        <input @bind-value="EntryFive" @bind-value:event="oninput" @onchange="SetValueSix" />
+        <p>Entry (onchange): @EntrySix</p>
+    </div>
+</div>
+@code {
+    public string EntryThree { get; set; }
+    public string EntryFour { get; set; }
+    public string EntryFive { get; set; }
+    public string EntrySix { get; set; }
+    public void SetValueFour(ChangeEventArgs e)
+    {
+        EntryFour = (string)e.Value;
+    }
+    public void SetValueSix(ChangeEventArgs e)
+    {
+        EntrySix = (string)e.Value;
+    }
+}

@@ -1,0 +1,95 @@
+﻿@page "/razorsyntax"
+<h3>Razor Syntax</h3>
+<div class="row">
+    <div class="col-md-6 border">
+        <h4>Some Use of @@!</h4>
+
+        <p>Next item commented out!!</p>@*<h4>Do Not Display This!</h4>*@
+
+        <p>But this is not commented out!!</p>
+
+        <p>Email: <strong>kjudemycourse@gmail.com</strong></p>
+
+        <p>This is an 'escaped' <strong>@@</strong> symbol (Using @@@@).</p>
+    </div>
+
+
+
+    <div class="col-md-6 border">
+        <h4>Expressions</h4>
+        <p>Simple expression (implicit): <strong>@Message</strong></p>
+
+        <p>Not what we wanted (Implicit): <strong>@X+@Y = @X+Y</strong></p>
+
+        <p>Wanted this(use of Explicit): <strong>@X+@Y = @(X+Y)</strong></p>
+
+        <p>Name from Property of object: <strong>@Data.Name</strong></p>
+
+        <p>Method call: Answer = <strong>@Answer()</strong></p>
+
+        <p>Encoding provided by Expression: @TagMessage</p>
+
+    </div>
+</div>
+<h4>Loops</h4>
+<div class="row mt-2">
+    <div class="col-md-6 border">
+        <strong>For loop:</strong>
+        @for (int i = 0; i < 3; i++)
+        {
+            <p>@i</p>
+        }
+    </div>
+    <div class="col-md-6 border">
+        <strong>Foreach loop:</strong>
+        @foreach (var item in Numbers)
+        {
+            <p>@item</p>
+        }
+    </div>
+</div>
+<h4>If</h4>
+<div class="row mt-2">
+    <div class="col-md-6 border">
+        <p><strong>You see me!</strong></p>
+        <strong>For loop:</strong>
+        @for (int i = 0; i < 3; i++)
+        {
+            <p>@i</p>
+        }
+    </div>
+    <div class="col-md-6 border">
+        <p><strong>You don't!</strong></p>
+        @if (Hide)
+        {
+            <p>Loop not used!</p>
+        }
+        else
+        {
+            <p><strong>Foreach loop:</strong></p>
+            @foreach (var item in Numbers)
+            {
+                <p>@item</p>
+            }
+        }
+    </div>
+</div>
+@code {
+    public string Message { get; set; } = "Property or Field.";
+
+    public int X { get; set; } = 10;
+    public int Y { get; set; } = 10;
+
+    public int[] Numbers { get; set; } = { 100, 101, 102 };
+
+    public bool Hide { get; set; } = true;
+
+    public SomeData Data { get; set; } = new SomeData() { Name = "Daffodil", Val = 23 };
+    public string TagMessage { get; set; } = "<h4>Some HTML - tags displayed<h4>";
+    public class SomeData
+    {
+        public string Name { get; set; }
+        public int Val { get; set; }
+    }
+    public int Answer() { return 42; }
+}

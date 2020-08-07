@@ -1,0 +1,26 @@
+﻿@page "/binding/oneway"
+<h3>Binding OneWay</h3>
+<div class="row">
+    <div class="col-md-6 border">
+        <p><strong>Expressions</strong></p>
+        <p>Message: @Message</p>
+
+    </div>
+    <div class="col-md-6 border">
+        <p><strong>Events</strong></p>
+        <div>
+            <button @onclick="() => HideOne = !HideOne">Hide using Lambda</button>
+            <label hidden=@HideOne> Now you see me!</label>
+        </div>
+        <div>
+            <button @onclick="UseHideTwo">Hide using Method</button>
+            <label hidden=@HideTwo>Now you see me!</label>
+        </div>
+    </div>
+</div>
+@code {
+    public string Message { get; set; } = "We have already seen expressions!";
+    public bool HideOne { get; set; } = false;
+    public bool HideTwo { get; set; } = false;
+    public void UseHideTwo() => HideTwo = !HideTwo;
+}

@@ -1,0 +1,30 @@
+﻿@page "/razor/multiply"
+<h3>Multiply</h3>
+
+<table class="border">
+    <thead>
+        <tr>
+            <th>x</th>
+            @for (int i = 1; i <= 10; i++)
+            {
+                <th>@i</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for (int j = 1; j <= 10; j++)
+        {
+            <tr>
+                <td><strong>@j</strong></td>
+                @for (int i = 1; i <= 10; i++)
+                {
+                    <td>@(i*j)</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+
+}

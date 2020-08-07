@@ -1,0 +1,15 @@
+﻿<tr>
+    <td><strong>@J</strong></td>
+    @for (int i = 1; i <= Max; i++)
+    {
+        <td>@Operation(i, J)</td>
+    }
+</tr>
+@code {
+    [Parameter]
+    public Func<int,int,int> Operation { get; set; }
+    [Parameter]
+    public int J { get; set; }
+    [Parameter]
+    public int Max { get; set; }
+}

@@ -1,0 +1,15 @@
+﻿<table class="table-bordered">
+    <thead>
+        <tr><th>Name</th><th>Date</th><th>Time</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Times)
+        {
+            <tr><td>@item.Name</td><td>@item.Date.ToString("dd/MM/yy")</td><td>@item.Time.ToString("HH:mm")</td></tr>
+        }
+    </tbody>
+</table>
+@code {
+    [Parameter]
+    public List<RunTime> Times { get; set; }
+}
