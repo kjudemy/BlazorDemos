@@ -1,0 +1,70 @@
+﻿@page "/local/multiply"
+@using BlazorTimes.Client.Shared.Times
+@inject IJSRuntime js
+<h3>multiply</h3>
+@if (Data == null)
+{ <p>Loading...</p>}
+else
+{
+    <p>Derived: @Location</p>
+<table class="border">
+    <thead>
+        <tr>
+            <th>x</th>
+            @for (int i = 1; i <= Data.Max; i++)
+            {
+                <th>@Data.Data[(Data.Max)+i]</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for (int j = 1; j <= Data.Max; j++)
+        {
+            <tr>
+                <td><strong>@j</strong></td>
+                @for (int i = 1; i <= Data.Max; i++)
+                {
+                    <td>@Data.Data[(Data.Max)*j+i]</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+}
+@code {
+    private MultiplicationTableData Data { get; set; }
+    public string Location { get; set; }
+    protected async override Task OnInitializedAsync()
+    {
+        var temp = (await BlazorTimes.Client.Helpers.DataStoreArray<MultiplicationTableData>.RetrieveItemAsync(js, "MultiplyData"));
+        if (temp != null)
+        {
+            Location = "Local Storage!";
+            Data = temp; }
+        else
+        {
+            Location = "Calculated!";
+            int max = 12;
+            Data = new MultiplicationTableData();
+            Data.Max = max;
+            Data.Data = new int[(max + 1) * (max + 1)];
+
+            for (int i = 0; i < max+1; i++)
+            {
+                for (int j = 0; j < max+1; j++)
+                {
+                    Data.Data[(max)*i + j] = i * j;
+                }
+            }
+            //await BlazorTimes.Client.Helpers.DataStoreArray<MultiplicationTableData>.StoreItemAsync(js, "MultiplyData", Data);
+            await BlazorTimes.Client.Helpers.DataStoreArray<MultiplicationTableData>.StoreItemAsync(js, "MultiplyData", Data);
+        }
+        await base.OnInitializedAsync();
+        return;
+    }
+    class MultiplicationTableData
+    {
+        public int Max { get; set; } = 0;
+        public int[] Data { get; set; }
+    }
+}
